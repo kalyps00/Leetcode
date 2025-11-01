@@ -24,12 +24,23 @@ public:
     ListNode *modifiedList(vector<int> &nums, ListNode *head)
     {
         sort(nums.begin(), nums.end());
-        while (head != nullptr)
+        ListNode *temp = head;
+        ListNode *prev;
+        ListNode dummy(-1, head);
+        prev = &dummy;
+        while (temp)
         {
-            if (binary_search(nums.begin(), nums.end(), head.val))
+            if (binary_search(nums.begin(), nums.end(), temp->val))
             {
-                head->next = head->next->next;
+                prev->next = temp->next;
+                temp = temp->next;
+            }
+            else
+            {
+                prev = temp;
+                temp = temp->next;
             }
         }
+        return dummy.next;
     }
 };
